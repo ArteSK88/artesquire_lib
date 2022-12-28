@@ -36,4 +36,5 @@ class ScandiLogin:
 
 
 class VkCredentials:
+    # your valid pass and login should be here
     user_data = {'username': "", "password": ""}

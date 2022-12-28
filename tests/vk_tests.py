@@ -1,3 +1,5 @@
+import os.path
+
 from pages.vk_page import VkHelper
 from test_data import TestUrls, VkCredentials
 import time
@@ -13,6 +15,7 @@ def test_vk_collect_cookies(browser):
 
 def test_vk_login_with_cookies(browser):
     start_page = VkHelper(browser)
-    start_page.load_cookies(cookiefile=r'C:\Users\Artesk\PycharmProjects\art_esque_lib\tests\cookies.txt',
-                            url=TestUrls.vk)
+    cookiefile = os.path.join(os.path.dirname(__file__), 'cookies.txt')
+    start_page.load_cookies(cookiefile=cookiefile, url=TestUrls.vk)
     time.sleep(5)
+

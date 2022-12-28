@@ -66,7 +66,7 @@ class BasePage:
 
     def save_cookies(self):
         return pickle.dump(self.driver.get_cookies(),
-                           open(r'C:\Users\Artesk\PycharmProjects\art_esque_lib\tests\cookies.txt', 'wb'))
+                           open("cookies.txt", 'wb'))
 
     def load_cookies(self, cookiefile, url):
         self.driver.get(url)
