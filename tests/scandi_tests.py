@@ -70,9 +70,3 @@ def test_sort_by_price_desc(browser):
     time.sleep(10)
 
 
-def test_asos(browser):
-    homepage = ScandiHomePageHelper(browser)
-    plp = ScandiPlpHelper(browser)
-    homepage.go_to_site("https://www.asos.com/adidas-originals/adidas-originals-oznova-trainers-in-off-white-and-grey/prd/202527704?colourWayId=202527705&cid=1935")
-    plp.asos_select("UK 8.5")
-    time.sleep(10)

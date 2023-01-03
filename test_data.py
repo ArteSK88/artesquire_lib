@@ -6,6 +6,10 @@ class TestUrls:
     key_web = "https://key.rt.ru/"
     scandiweb = "https://qatest-dev.indvp.com/"
     vk = "https://vk.com/"
+    jquery = "https://jqueryui.com/droppable/"
+    flipkart = "https://www.flipkart.com/search?sid=tyy%2C4io&otracker=CLP_Filters&p%5B%5D=facets.price_range.from%3DMin&p%5B%5D=facets.price_range.to%3DMax"
+    asos = "https://www.asos.com/adidas-originals/adidas-originals-oznova-trainers-in-off-white-and-grey/prd/202527704?colourWayId=202527705&cid=1935"
+    rediff = "https://mail.rediff.com/cgi-bin/login.cgi"
 
 
 class TestDataSet:

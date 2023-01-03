@@ -24,10 +24,10 @@ class ScandiHomePageLocators:
     WHITE_PORCELAIN_LOCATOR = (By.XPATH, '//a[contains(text(), "White Porcelain")]')
     GARDEN_SHOP_NOW_LOCATOR = (By.CSS_SELECTOR, "a.pagebuilder-button-primary")
 
+
 class ScandiPlpLocators:
     SORT_BY_LOCATOR = (By.XPATH, '//label[contains(text(), "Sort By")]')
     DROP_DOWN_LOCATOR = (By.XPATH, "//select[@id='category-sort']")
-    ASOS_SELECT = (By.ID, 'main-size-select-0')
 
 
 class ScandiAuthHelper(BasePage):
@@ -84,7 +84,5 @@ class ScandiPlpHelper(BasePage):
         self.find_element(ScandiPlpLocators.SORT_BY_LOCATOR).click()
         self.select_from_dropdown_by_value(ScandiPlpLocators.DROP_DOWN_LOCATOR, "DESC price")
 
-    def asos_select(self, visible_text):
-        self.find_element(ScandiPlpLocators.ASOS_SELECT).click()
-        self.select_from_dropdown_by_text(ScandiPlpLocators.ASOS_SELECT, visible_text)
-        self.find_element(ScandiPlpLocators.ASOS_SELECT).click()
+
+
