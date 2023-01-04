@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from selenium.webdriver.common.action_chains import ActionChains
 import pickle
+import datetime
 
 
 class BasePage:
@@ -13,9 +14,12 @@ class BasePage:
         self.driver = driver
         self.actions = ActionChains(self.driver)
         self.alert = Alert(self.driver)
+        self.timestamp = datetime.datetime.now().strftime("%Y.%m.%d.%H.%M.%S")
+        self.utc_timestamp = datetime.datetime.utcnow().strftime("%Y.%m.%d.%H.%M.%S")
 
     def go_to_site(self, url):
-        return self.driver.get(url)
+        self.driver.get(url)
+        return self.driver.current_url
 
     def find_element(self, locator, time=10):
         return WebDriverWait(self.driver, time).until(EC.presence_of_element_located(locator),
@@ -90,6 +94,13 @@ class BasePage:
                                                       message=f'not find {locator}')
         return elements[index].location_once_scrolled_into_view
 
+    def switch_to_window(self, index):
+        self.driver.switch_to.window(self.driver.window_handles[index])
+        return self.driver.current_url
+
+    def close_window(self):
+        return self.driver.close()
+
     def catch_alert(self):
         return self.alert.text
 
@@ -109,3 +120,12 @@ class BasePage:
         for cookie in cookies:
             self.driver.add_cookie(cookie)
         self.driver.refresh()
+
+    def save_screenshot(self):
+        return self.driver.save_screenshot(f"collected_data/screenshot_{self.timestamp}.png")
+
+    def save_screenshot_highlighted(self, locator, index=0, time=10):
+        elements = WebDriverWait(self.driver, time).until(EC.presence_of_all_elements_located(locator),
+                                                          message=f'not find {locator}')
+        self.driver.execute_script("arguments[0].style.border='3px solid red'", elements[index])
+        return self.driver.save_screenshot(f"collected_data/screenshot_{self.timestamp}.png")

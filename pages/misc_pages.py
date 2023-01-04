@@ -9,6 +9,7 @@ class JqeryLocators:
     DROPPABLE_LOCATOR = (By.ID, "draggable")
     DROP_AREA_LOCATOR = (By.ID, "droppable")
 
+
 class JqueryPageHelper(BasePage):
     def drag_element(self, x, y):
         return self.drag_n_drop_by_offset(locator=JqeryLocators.DROPPABLE_LOCATOR,
@@ -22,8 +23,13 @@ class JqueryPageHelper(BasePage):
 
 class FlipKartLocators:
     SLIDER_LOCATOR = (By.CSS_SELECTOR, "div._3FdLqY")
+    SLIDER_SECTION_LOCATOR = (By.CSS_SELECTOR, "section._2yz7eI")
+
 
 class FlipKartPageHelper(BasePage):
+    def highlight_slider_section_n_screenshot(self):
+        return self.save_screenshot_highlighted(FlipKartLocators.SLIDER_SECTION_LOCATOR)
+
     def move_left_slider(self, x):
         return self.drag_n_drop_by_offset(FlipKartLocators.SLIDER_LOCATOR, index=0, x_offset=x)
 
@@ -34,6 +40,7 @@ class FlipKartPageHelper(BasePage):
 class AsosLocators:
     ASOS_SELECT = (By.ID, 'main-size-select-0')
 
+
 class AsosPageHelper(BasePage):
     def asos_select(self, visible_text):
         self.find_element(AsosLocators.ASOS_SELECT).click()
@@ -43,6 +50,7 @@ class AsosPageHelper(BasePage):
 
 class RediffLocators:
     REDIFF_SUBMIT = (By.NAME, 'proceed')
+
 
 class RediffPageHelper(BasePage):
     def rediff_submit(self):
@@ -55,6 +63,7 @@ class VkLocators:
     PSWD_FIELD = (By.NAME, 'password')
     CONTINUE_BUTTON = (By.XPATH, '//span[contains(text(), "Продолжить")]')
 
+
 class VkPageHelper(BasePage):
     def sign_in(self, user_data):
         time.sleep(2)
@@ -66,3 +75,13 @@ class VkPageHelper(BasePage):
         time.sleep(2)
         self.find_element(VkLocators.CONTINUE_BUTTON).click()
         time.sleep(2)
+
+
+class AvitoLocators:
+    AD_LOCATOR = (By.CLASS_NAME, "iva-item-titleStep-pdebR")
+
+
+class AvitoPageHelper(BasePage):
+    def open_ad(self, index):
+        ads = self.find_elements(AvitoLocators.AD_LOCATOR)
+        return ads[index].click()
