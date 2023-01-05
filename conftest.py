@@ -2,6 +2,7 @@ import pytest
 from selenium import webdriver
 
 
+
 @pytest.fixture(scope='session')
 def browser():
     options = webdriver.ChromeOptions()
@@ -14,4 +15,3 @@ def browser():
 
 
 
-# python -m pytest -v --driver Chrome --driver-path */chromedriver  test.py

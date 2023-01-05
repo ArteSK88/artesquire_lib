@@ -4,6 +4,8 @@ from pages.misc_pages import JqueryPageHelper, FlipKartPageHelper, AsosPageHelpe
 import os
 import time
 
+# python -m pytest -v --driver Chrome --driver-path "./chromedriver" tests/misc_tests.py
+
 
 def test_jquery_offset_drag(browser):
     jquery_page = JqueryPageHelper(browser)
@@ -40,11 +42,11 @@ def test_asos_dropdown_list(browser):
 def test_rediff_alert(browser):
     rediff_page = RediffPageHelper(browser)
     rediff_page.go_to_site(TestUrls.rediff)
+    assert rediff_page.rediff_submit_button_color() == "rgba(89, 124, 24, 1)"
     rediff_page.rediff_submit()
     assert "Please enter a valid user name" in rediff_page.catch_alert()
     time.sleep(1)
     rediff_page.accept_alert()
-    time.sleep(1)
 
 
 def test_vk_collect_cookies(browser):
@@ -57,7 +59,7 @@ def test_vk_collect_cookies(browser):
 
 def test_vk_login_with_cookies(browser):
     vk_page = VkPageHelper(browser)
-    cookiefile = os.path.join(os.path.dirname(__file__), 'collected_data/cookies.txt')
+    cookiefile = os.path.join(os.path.dirname(__file__), 'cookies.txt')
     vk_page.load_cookies(cookiefile=cookiefile, url=TestUrls.vk)
     time.sleep(5)
 

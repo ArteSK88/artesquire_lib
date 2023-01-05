@@ -29,6 +29,11 @@ class BasePage:
         return WebDriverWait(self.driver, time).until(EC.presence_of_all_elements_located(locator),
                                                       message=f'not find {locator}')
 
+    def get_css_property(self, locator, property_name, index=0, time=10):
+        elements = WebDriverWait(self.driver, time).until(EC.presence_of_all_elements_located(locator),
+                                                      message=f'not find {locator}')
+        return elements[index].value_of_css_property(property_name)
+
     def select_from_dropdown_by_text(self, locator, visible_text, time=10):
         element = WebDriverWait(self.driver, time).until(EC.presence_of_element_located(locator),
                                                          message=f'not find {locator}')
@@ -122,10 +127,10 @@ class BasePage:
         self.driver.refresh()
 
     def save_screenshot(self):
-        return self.driver.save_screenshot(f"collected_data/screenshot_{self.timestamp}.png")
+        return self.driver.save_screenshot(f"screenshot_{self.timestamp}.png")
 
     def save_screenshot_highlighted(self, locator, index=0, time=10):
         elements = WebDriverWait(self.driver, time).until(EC.presence_of_all_elements_located(locator),
                                                           message=f'not find {locator}')
         self.driver.execute_script("arguments[0].style.border='3px solid red'", elements[index])
-        return self.driver.save_screenshot(f"collected_data/screenshot_{self.timestamp}.png")
+        return self.driver.save_screenshot(f"screenshot_{self.timestamp}.png")

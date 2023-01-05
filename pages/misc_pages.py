@@ -49,12 +49,15 @@ class AsosPageHelper(BasePage):
 
 
 class RediffLocators:
-    REDIFF_SUBMIT = (By.NAME, 'proceed')
+    REDIFF_SUBMIT = (By.CSS_SELECTOR, 'input.signinbtn')
 
 
 class RediffPageHelper(BasePage):
     def rediff_submit(self):
         return self.find_element(RediffLocators.REDIFF_SUBMIT).click()
+
+    def rediff_submit_button_color(self):
+        return self.get_css_property(RediffLocators.REDIFF_SUBMIT, "background-color")
 
 
 class VkLocators:

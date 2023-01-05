@@ -19,6 +19,7 @@ class ScandiAuthLocators:
 
 
 class ScandiHomePageLocators:
+    HEADER_LOCATOR = (By.CSS_SELECTOR, "div.Header-ContactUs")
     PORTMEIRON_LOCATOR = (By.XPATH, '//figcaption[contains(text(), "Portmeirion")]')
     MUGS_N_CUPS_LOCATOR = (By.XPATH, '//a[contains(text(), "Mugs & Cups")]')
     WHITE_PORCELAIN_LOCATOR = (By.XPATH, '//a[contains(text(), "White Porcelain")]')

@@ -3,6 +3,7 @@ from test_data import ScandiLogin, TestUrls
 import time
 
 
+
 def test_scroll_to_element(browser):
     scandipage = ScandiHomePageHelper(browser)
     scandipage.go_to_site(TestUrls.scandiweb)
@@ -68,5 +69,3 @@ def test_sort_by_price_desc(browser):
     homepage.click_on_white_porcelain()
     plp.sort_by_price_descending()
     time.sleep(10)
-
-
