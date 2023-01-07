@@ -3,7 +3,6 @@ from test_data import ScandiLogin, TestUrls
 import time
 
 
-
 def test_scroll_to_element(browser):
     scandipage = ScandiHomePageHelper(browser)
     scandipage.go_to_site(TestUrls.scandiweb)
@@ -23,13 +22,56 @@ def test_first_scandi_hover_n_click(browser):
     time.sleep(5)
 
 
-def test_second_scandi_hover_n_click(browser):
+def test_product_cards_on_page_counter(browser, request):
+    func_name = request.node.name
     scandipage = ScandiHomePageHelper(browser)
+    plp_page = ScandiPlpHelper(browser)
     scandipage.go_to_site(TestUrls.scandiweb)
     scandipage.hover_over_portmeirion()
-    # time.sleep(2)
-    scandipage.click_on_mugs_n_cups()
-    time.sleep(5)
+    scandipage.click_on_all_portmeirion()
+    if plp_page.count_product_cards() != plp_page.items_on_page_counted_output():
+        plp_page.highlight_counter()
+        plp_page.zoom(95)
+        plp_page.save_screenshot(func_name)
+    else:
+        pass
+    assert plp_page.count_product_cards() == plp_page.items_on_page_counted_output()
+
+
+def test_product_cards_total_counter(browser):
+    scandipage = ScandiHomePageHelper(browser)
+    plp_page = ScandiPlpHelper(browser)
+    scandipage.go_to_site(TestUrls.scandiweb)
+    scandipage.hover_over_portmeirion()
+    scandipage.click_on_all_portmeirion()
+    product_cards_total = []
+    try:
+        while True:
+            cards_on_page = plp_page.count_product_cards()
+            plp_page.count_product_cards()
+            product_cards_total.append(cards_on_page)
+            plp_page.click_on_next_page()
+    except:
+        pass
+    assert sum(product_cards_total) == plp_page.items_total_counted_output()
+
+
+def test_plp_images_displayed(browser, request):
+    func_name = request.node.name
+    scandipage = ScandiHomePageHelper(browser)
+    plp_page = ScandiPlpHelper(browser)
+    scandipage.go_to_site(TestUrls.scandiweb)
+    scandipage.hover_over_portmeirion()
+    scandipage.click_on_all_portmeirion()
+    all_images_sizes = []
+    for i in range(plp_page.count_product_cards()):
+        all_images_sizes.append(plp_page.product_card_image_size(i))
+        if plp_page.product_card_image_size(i) < 10:
+            plp_page.highlight_product_image(i)
+    if min(all_images_sizes) < 10:
+        plp_page.zoom(30)
+        plp_page.save_screenshot(func_name)
+    assert min(all_images_sizes) >= 10
 
 
 def test_create_new_account(browser):

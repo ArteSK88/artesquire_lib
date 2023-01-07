@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver.common.by import By
 
 from pages.base_page import BasePage
@@ -21,12 +23,17 @@ class ScandiAuthLocators:
 class ScandiHomePageLocators:
     HEADER_LOCATOR = (By.CSS_SELECTOR, "div.Header-ContactUs")
     PORTMEIRON_LOCATOR = (By.XPATH, '//figcaption[contains(text(), "Portmeirion")]')
+    ALL_PORTMEIRION_LOCATOR = (By.XPATH, '//a[contains(text(), "All Portmeirion")]')
     MUGS_N_CUPS_LOCATOR = (By.XPATH, '//a[contains(text(), "Mugs & Cups")]')
     WHITE_PORCELAIN_LOCATOR = (By.XPATH, '//a[contains(text(), "White Porcelain")]')
     GARDEN_SHOP_NOW_LOCATOR = (By.CSS_SELECTOR, "a.pagebuilder-button-primary")
 
 
 class ScandiPlpLocators:
+    PRODUCT_CARD_LOCATOR = (By.XPATH, '//a[@block="ProductCard"]')
+    PRODUCT_IMAGE_LOCATOR = (By.CSS_SELECTOR, 'img.Image-Image')
+    ITEMS_COUNTER_LOCATOR = (By.CSS_SELECTOR, 'div.ItemsCount')
+    NEXT_PAGE_LOCATOR = (By.XPATH, '//a[@aria-label="Next Page"]')
     SORT_BY_LOCATOR = (By.XPATH, '//label[contains(text(), "Sort By")]')
     DROP_DOWN_LOCATOR = (By.XPATH, "//select[@id='category-sort']")
 
@@ -66,6 +73,9 @@ class ScandiHomePageHelper(BasePage):
     def hover_over_portmeirion(self):
         return self.hover_over_element(ScandiHomePageLocators.PORTMEIRON_LOCATOR)
 
+    def click_on_all_portmeirion(self):
+        return self.find_element(ScandiHomePageLocators.ALL_PORTMEIRION_LOCATOR).click()
+
     def hover_over_portmeirion_n_click_on_mugs_n_cups(self):
         return self.hover_n_click(ScandiHomePageLocators.PORTMEIRON_LOCATOR, ScandiHomePageLocators.MUGS_N_CUPS_LOCATOR)
 
@@ -77,6 +87,38 @@ class ScandiHomePageHelper(BasePage):
 
 
 class ScandiPlpHelper(BasePage):
+    def next_page_available(self):
+        return bool(self.find_element(ScandiPlpLocators.NEXT_PAGE_LOCATOR))
+
+    def click_on_next_page(self):
+        return self.find_element(ScandiPlpLocators.NEXT_PAGE_LOCATOR).click()
+
+    def count_product_cards(self):
+        return len(self.find_elements(ScandiPlpLocators.PRODUCT_CARD_LOCATOR))
+
+    def items_on_page_counted_output(self):
+        return int(self.find_element(ScandiPlpLocators.ITEMS_COUNTER_LOCATOR).text.split(' ')[3]) + 1 \
+               - int(self.find_element(ScandiPlpLocators.ITEMS_COUNTER_LOCATOR).text.split(' ')[1])
+
+    def items_total_counted_output(self):
+        return int(self.find_element(ScandiPlpLocators.ITEMS_COUNTER_LOCATOR).text.split(' ')[5])
+
+    def product_card_image_size(self, index):
+        return self.get_image_size(ScandiPlpLocators.PRODUCT_IMAGE_LOCATOR, index=index)
+
+    def presence_of_image(self, index):
+        return self.check_presence_of_image(ScandiPlpLocators.PRODUCT_IMAGE_LOCATOR, index=index)
+
+    def highlight_counter(self):
+        self.move_to_element(ScandiPlpLocators.ITEMS_COUNTER_LOCATOR)
+        time.sleep(1)
+        return self.highlight_element(ScandiPlpLocators.ITEMS_COUNTER_LOCATOR)
+
+    def highlight_product_image(self, index):
+        self.move_to_element(ScandiPlpLocators.PRODUCT_IMAGE_LOCATOR)
+        time.sleep(1)
+        return self.highlight_element(ScandiPlpLocators.PRODUCT_IMAGE_LOCATOR, index=index)
+
     def sort_by_price_ascending(self):
         self.find_element(ScandiPlpLocators.SORT_BY_LOCATOR).click()
         self.select_from_dropdown_by_text(ScandiPlpLocators.DROP_DOWN_LOCATOR, "Price: Low to High")

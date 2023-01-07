@@ -1,6 +1,9 @@
+/.idea
+/__pycache__
 /.pytest_cache
 /allureres
 /venv
 /attempt.py
 /log.txt
 /README.md
+/.gitignore
