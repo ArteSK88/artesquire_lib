@@ -89,25 +89,33 @@ def test_sign_in_and_log_out(browser):
     time.sleep(5)
 
 
-def test_sort_by_price_asc(browser):
+def test_sort_by_price_asc_on_page_two(browser, request):
+    func_name = request.node.name
     homepage = ScandiHomePageHelper(browser)
     plp = ScandiPlpHelper(browser)
     homepage.go_to_site(TestUrls.scandiweb)
-    homepage.hover_over_portmeirion()
-    homepage.click_on_white_porcelain()
+    homepage.click_on_new_in()
     plp.sort_by_price_ascending()
-    time.sleep(2)
-    plp.scroll_down()
-    time.sleep(2)
-    plp.scroll_up()
-    time.sleep(2)
+    plp.click_on_page_two()
+    pricelist = plp.get_price_list()
+    try:
+        for i in range(1, len(pricelist)):
+            if pricelist[i] < pricelist[i-1]:
+                plp.highlight_price(i)
+            assert pricelist[i] >= pricelist[i-1]
+    except AssertionError:
+        plp.zoom(80)
+        plp.save_screenshot(func_name)
+        raise AssertionError
 
 
 def test_sort_by_price_desc(browser):
     homepage = ScandiHomePageHelper(browser)
     plp = ScandiPlpHelper(browser)
     homepage.go_to_site(TestUrls.scandiweb)
-    homepage.hover_over_portmeirion()
-    homepage.click_on_white_porcelain()
+    homepage.click_on_new_in()
     plp.sort_by_price_descending()
-    time.sleep(10)
+    # time.sleep(3)
+    pricelist = plp.get_price_list()
+    for i in range(1, len(pricelist)):
+        assert pricelist[i] <= pricelist[i-1]

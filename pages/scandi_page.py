@@ -24,6 +24,7 @@ class ScandiHomePageLocators:
     HEADER_LOCATOR = (By.CSS_SELECTOR, "div.Header-ContactUs")
     PORTMEIRON_LOCATOR = (By.XPATH, '//figcaption[contains(text(), "Portmeirion")]')
     ALL_PORTMEIRION_LOCATOR = (By.XPATH, '//a[contains(text(), "All Portmeirion")]')
+    NEW_IN_LOCATOR = (By.XPATH, '//figcaption[contains(text(), "New In")]')
     MUGS_N_CUPS_LOCATOR = (By.XPATH, '//a[contains(text(), "Mugs & Cups")]')
     WHITE_PORCELAIN_LOCATOR = (By.XPATH, '//a[contains(text(), "White Porcelain")]')
     GARDEN_SHOP_NOW_LOCATOR = (By.CSS_SELECTOR, "a.pagebuilder-button-primary")
@@ -32,9 +33,13 @@ class ScandiHomePageLocators:
 class ScandiPlpLocators:
     PRODUCT_CARD_LOCATOR = (By.XPATH, '//a[@block="ProductCard"]')
     PRODUCT_IMAGE_LOCATOR = (By.CSS_SELECTOR, 'img.Image-Image')
+    PRICE_LOCATOR = (By.XPATH, '//span[@itemprop="lowPrice"]')
     ITEMS_COUNTER_LOCATOR = (By.CSS_SELECTOR, 'div.ItemsCount')
+    PAGE_TWO_LOCATOR = (By.XPATH, '//a[@aria-label="Page 2"]')
     NEXT_PAGE_LOCATOR = (By.XPATH, '//a[@aria-label="Next Page"]')
     SORT_BY_LOCATOR = (By.XPATH, '//label[contains(text(), "Sort By")]')
+    SORT_BY_PRICE_ASC_LOCATOR = (By.ID, "oASC price")
+    SORT_BY_PRICE_DESC_LOCATOR = (By.ID, "oDESC price")
     DROP_DOWN_LOCATOR = (By.XPATH, "//select[@id='category-sort']")
 
 
@@ -64,6 +69,9 @@ class ScandiAuthHelper(BasePage):
 
 
 class ScandiHomePageHelper(BasePage):
+    def click_on_new_in(self):
+        return self.find_element(ScandiHomePageLocators.NEW_IN_LOCATOR).click()
+
     def click_on_portmeirion(self):
         return self.find_element(ScandiHomePageLocators.PORTMEIRON_LOCATOR).click()
 
@@ -87,11 +95,11 @@ class ScandiHomePageHelper(BasePage):
 
 
 class ScandiPlpHelper(BasePage):
-    def next_page_available(self):
-        return bool(self.find_element(ScandiPlpLocators.NEXT_PAGE_LOCATOR))
-
     def click_on_next_page(self):
         return self.find_element(ScandiPlpLocators.NEXT_PAGE_LOCATOR).click()
+
+    def click_on_page_two(self):
+        return self.find_element(ScandiPlpLocators.PAGE_TWO_LOCATOR).click()
 
     def count_product_cards(self):
         return len(self.find_elements(ScandiPlpLocators.PRODUCT_CARD_LOCATOR))
@@ -119,13 +127,22 @@ class ScandiPlpHelper(BasePage):
         time.sleep(1)
         return self.highlight_element(ScandiPlpLocators.PRODUCT_IMAGE_LOCATOR, index=index)
 
+    def highlight_price(self, index):
+        self.move_to_element(ScandiPlpLocators.PRICE_LOCATOR)
+        time.sleep(1)
+        return self.highlight_element(ScandiPlpLocators.PRICE_LOCATOR, index=index)
+
     def sort_by_price_ascending(self):
         self.find_element(ScandiPlpLocators.SORT_BY_LOCATOR).click()
-        self.select_from_dropdown_by_text(ScandiPlpLocators.DROP_DOWN_LOCATOR, "Price: Low to High")
+        self.find_element(ScandiPlpLocators.SORT_BY_PRICE_ASC_LOCATOR).click()
 
     def sort_by_price_descending(self):
         self.find_element(ScandiPlpLocators.SORT_BY_LOCATOR).click()
-        self.select_from_dropdown_by_value(ScandiPlpLocators.DROP_DOWN_LOCATOR, "DESC price")
+        self.find_element(ScandiPlpLocators.SORT_BY_PRICE_DESC_LOCATOR).click()
+
+    def get_price_list(self):
+        self.find_elements(ScandiPlpLocators.PRICE_LOCATOR)
+        return [float(x.text) for x in self.find_elements(ScandiPlpLocators.PRICE_LOCATOR)]
 
 
 
