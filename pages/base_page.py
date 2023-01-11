@@ -1,11 +1,8 @@
 import urllib.request
-
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.support import expected_conditions as EC
-
-
 from selenium.webdriver.common.action_chains import ActionChains
 import pickle
 import datetime
@@ -30,6 +27,14 @@ class BasePage:
     def find_elements(self, locator, time=10):
         return WebDriverWait(self.driver, time).until(EC.presence_of_all_elements_located(locator),
                                                       message=f'not find {locator}')
+
+    def visible_element(self, locator, time=10):
+        return WebDriverWait(self.driver, time).until(EC.visibility_of_element_located(locator),
+                                                          message=f'not visible {locator}')
+
+    def invisible_element(self, locator, time=10):
+        return WebDriverWait(self.driver, time).until(EC.invisibility_of_element_located(locator),
+                                                          message=f'still visible {locator}')
 
     def get_css_property(self, locator, property_name, index=0, time=10):
         elements = WebDriverWait(self.driver, time).until(EC.presence_of_all_elements_located(locator),
@@ -163,6 +168,11 @@ class BasePage:
         elements = WebDriverWait(self.driver, time).until(EC.presence_of_all_elements_located(locator),
                                                           message=f'not find {locator}')
         return self.driver.execute_script("arguments[0].style.border='3px solid red'", elements[index])
+
+    def highlight_single_element(self, locator, time=10):
+        element = WebDriverWait(self.driver, time).until(EC.presence_of_element_located(locator),
+                                                          message=f'not find {locator}')
+        return self.driver.execute_script("arguments[0].style.border='3px solid red'", element)
 
     def save_screenshot_highlighted(self, locator, index=0, time=10):
         elements = WebDriverWait(self.driver, time).until(EC.presence_of_all_elements_located(locator),
