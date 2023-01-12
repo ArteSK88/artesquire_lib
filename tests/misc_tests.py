@@ -35,7 +35,7 @@ def test_flipkart_slider(browser):
 def test_asos_dropdown_list(browser):
     asos_page = AsosPageHelper(browser)
     asos_page.go_to_site(TestUrls.asos)
-    asos_page.asos_select("UK 8.5")
+    asos_page.asos_select("UK 6")
     time.sleep(10)
 
 
@@ -48,7 +48,7 @@ def test_rediff_alert(browser):
     time.sleep(1)
     rediff_page.accept_alert()
 
-
+"""to make the 'vk' tests work correctly please add your valid credentials to user_data dict in test_data.VkCredentials """
 def test_vk_collect_cookies(browser):
     vk_page = VkPageHelper(browser)
     vk_page.go_to_site(TestUrls.vk)
@@ -59,7 +59,8 @@ def test_vk_collect_cookies(browser):
 
 def test_vk_login_with_cookies(browser):
     vk_page = VkPageHelper(browser)
-    cookiefile = os.path.join(os.path.dirname(__file__), 'cookies.txt')
+    # cookiefile = os.path.join(os.path.dirname(__file__), 'cookies.txt')
+    cookiefile = 'collected_data/cookies.txt'
     vk_page.load_cookies(cookiefile=cookiefile, url=TestUrls.vk)
     time.sleep(5)
 

@@ -162,7 +162,7 @@ class BasePage:
             screenshot_name = "screenshot"
         else:
             screenshot_name = comment
-        return self.driver.save_screenshot(f"{screenshot_name}_{self.timestamp}.png")
+        return self.driver.save_screenshot(f"collected_data/{screenshot_name}_{self.timestamp}.png")
 
     def highlight_element(self, locator, index=0, time=10):
         elements = WebDriverWait(self.driver, time).until(EC.presence_of_all_elements_located(locator),
@@ -178,7 +178,7 @@ class BasePage:
         elements = WebDriverWait(self.driver, time).until(EC.presence_of_all_elements_located(locator),
                                                           message=f'not find {locator}')
         self.driver.execute_script("arguments[0].style.border='3px solid red'", elements[index])
-        return self.driver.save_screenshot(f"screenshot_{self.timestamp}.png")
+        return self.driver.save_screenshot(f"collected_data/screenshot_{self.timestamp}.png")
 
     def zoom(self, zoom_value):
         return self.driver.execute_script(f"document.body.style.zoom='{zoom_value}%'")
