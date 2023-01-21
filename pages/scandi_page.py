@@ -30,7 +30,7 @@ class ScandiHomePageLocators:
     ALL_PORTMEIRION_LOCATOR = (By.XPATH, '//a[contains(text(), "All Portmeirion")]')
     NEW_IN_LOCATOR = (By.XPATH, '//figcaption[contains(text(), "New In")]')
     SALE_ROOM_LOCATOR = (By.XPATH, '//figcaption[contains(text(), "Sale Room")]')
-    EMPTY_PAGE_LOCATOR = (By.CSS_SELECTOR, 'div.CmsBlock-Wrapper')
+    EMPTY_PAGE_LOCATOR = (By.CSS_SELECTOR, 'div.NoMatch-Wrapper')
     MUGS_N_CUPS_LOCATOR = (By.XPATH, '//a[contains(text(), "Mugs & Cups")]')
     WHITE_PORCELAIN_LOCATOR = (By.XPATH, '//a[contains(text(), "White Porcelain")]')
     GARDEN_SHOP_NOW_LOCATOR = (By.CSS_SELECTOR, "a.pagebuilder-button-primary")
@@ -106,7 +106,7 @@ class ScandiHomePageHelper(BasePage):
         return self.find_element(ScandiHomePageLocators.SALE_ROOM_LOCATOR).click()
 
     def empty_page_message(self):
-        return self.find_element([ScandiHomePageLocators.EMPTY_PAGE_LOCATOR][0]).text
+        return self.find_element(ScandiHomePageLocators.EMPTY_PAGE_LOCATOR).text
 
     def all_portmeirion_is_not_visible(self):
         return self.invisible_element(ScandiHomePageLocators.ALL_PORTMEIRION_LOCATOR)

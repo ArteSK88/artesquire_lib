@@ -1,4 +1,4 @@
-from test_data import TestUrls, VkCredentials
+from test_data_misc import TestUrls, VkCredentials
 from pages.misc_pages import JqueryPageHelper, FlipKartPageHelper, AsosPageHelper, RediffPageHelper, \
     VkPageHelper, AvitoPageHelper
 import os

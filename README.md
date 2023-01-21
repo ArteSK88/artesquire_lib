@@ -30,7 +30,4 @@ To launch webstore testing in scandi_tests.py with allure reports:
 Generate allure reports summary:
 >allure serve allureres
 
-To launch miscellaneous tests to demonstrate some BasePage methods in misc_tests.py:
->python -m pytest -v --driver Chrome --driver-path "./chromedriver" tests/misc_tests.py
-
 <a href="#p7">Back to top</a>
